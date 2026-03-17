@@ -27,7 +27,7 @@ body {
 #board {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 15px;
+  gap: 1rem;
   justify-content: center;
   margin: 20px 0;
 }
@@ -286,14 +286,14 @@ h2 {
   }
 
   .screen {
-    width: 80%;
+    width: 100%;
     min-width: unset;
     padding: 20px;
   }
 
   #board {
-    grid-template-columns: repeat(3, 1fr); /* auto kecil */
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr); /* auto kecil */
+    gap: 0.2rem;
   }
 
   .card {
