@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Matching Flip Card Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="universe"></div>
+<!-- START SCREEN -->
+<div id="start-screen" class="screen">
+  <h1>Matching Flip Card Game</h1>
+  <h2>Selamat Datang Player !</h2>
+  <select id="difficulty" name="pilih level">
+    <option value="" disabled selected hidden>-- Pilih Level --</option>
+<option value="4">Easy (8 kartu)</option>
+<option value="6">Medium (12 kartu)</option>
+<option value="8">Hard (16 kartu)</option>
+</select>
+  <p>Kemenanganmu baru-baru ini:</p>
+  <p id="totalWin"></p>
+  <button id="startBtn">Bermain</button>
+</div>
+
+
+<!-- GAME SCREEN -->
+<div id="game-screen" class="screen" >
+  <h2>Guess the Card !<span style="font-size: 21px;">😊</span></h2>
+  <div id="board"></div>
+  <button id="exitBtn">Keluar</button>
+</div>
+
+<!-- WIN SCREEN -->
+<div id="win-screen" class="screen">
+  <div id="confetti-container"></div>
+  <h2>Kamu Menang!<span style="font-size: 23px;">🎊</span></h2>
+  <img src="img/maxwell-maxwellthecat.gif" alt="Kucing lucu bermain" width="300" height="250">
+  <button id="playAgainBtn">Main Lagi</button>
+  <button id="backBtn">Kembali ke Beranda</button>
+</div>
+
+<div id="confirm-exit" class="modal">
+  <div class="modal-content">
+    <h3>Yaakin ga mau lanjut? <span style="font-size: 21px;">😔</span></h3>
+    <button id="confirmYes">Ya</button>
+    <button id="confirmNo">Lanjut deh</button>
+  </div>
+</div>
+    <script src="index.js"></script>
+</body>
+</html>
