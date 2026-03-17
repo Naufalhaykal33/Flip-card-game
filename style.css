@@ -59,7 +59,7 @@ button {
   padding: 10px 20px;
   border: none;
   border-radius: 10px;
-  background: #4CAF50;
+  background: #39a43d;
   color: white;
   font-size: 14px;
   cursor: pointer;
@@ -90,8 +90,8 @@ button:hover {
     }
 
 .card {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   perspective: 1000px;
   cursor: pointer;
 }
@@ -293,7 +293,7 @@ h2 {
 
   #board {
     grid-template-columns: repeat(4, 1fr); /* auto kecil */
-    gap: 0.2rem;
+    gap: 0.1rem;
   }
 
   .card {
