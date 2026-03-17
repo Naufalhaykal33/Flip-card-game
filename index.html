@@ -12,6 +12,7 @@
 <div id="start-screen" class="screen">
   <h1>Matching Flip Card Game</h1>
   <h2>Selamat Datang Player !</h2>
+  <button id="toggleSound">🔊 Sound ON</button>
   <select id="difficulty" name="pilih level">
     <option value="" disabled selected hidden>-- Pilih Level --</option>
 <option value="4">Easy (8 kartu)</option>
@@ -27,6 +28,7 @@
 <!-- GAME SCREEN -->
 <div id="game-screen" class="screen" >
   <h2>Guess the Card !<span style="font-size: 21px;">😊</span></h2>
+  <p>Moves: <b><span id="moveCounter">0</span></b></p>
   <div id="board"></div>
   <button id="exitBtn">Keluar</button>
 </div>

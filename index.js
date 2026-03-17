@@ -7,9 +7,25 @@ const playAgainBtn = document.getElementById("playAgainBtn");
 const backBtn = document.getElementById("backBtn");
 const difficulty = document.getElementById("difficulty");
 
+let moves = 0;
+const moveCounter = document.getElementById("moveCounter");
+
+const clickSound = new Audio("sound/klik.wav");
+const flipSound = new Audio("sound/flip.wav");
+const matchSound = new Audio("sound/match.wav");
+const winSound = new Audio("sound/win.wav");
+clickSound.volume = 0.5;
+flipSound.volume = 0.6;
+matchSound.volume = 0.4;
+winSound.volume = 1;
+const bgMusic = new Audio("sound/background.wav");
+bgMusic.loop = true;
+bgMusic.volume = 0.3;
+
 const board = document.getElementById("board");
 const totalWinText = document.getElementById("totalWin");
 
+let soundEnabled = true;
 let currentDifficulty = "easy";
 const allCards = [
 "🍎",
@@ -30,6 +46,42 @@ let matchedCount = 0;
 
 loadWin();
 
+playSound(clickSound);
+
+const toggleBtn = document.getElementById("toggleSound");
+
+toggleBtn.addEventListener("click", () => {
+
+  soundEnabled = !soundEnabled;
+
+  if (soundEnabled) {
+    toggleBtn.innerText = "🔊 Sound ON";
+    playMusic();
+  } else {
+    toggleBtn.innerText = "🔇 Sound OFF";
+    stopMusic();
+  }
+
+  localStorage.setItem("sound", soundEnabled);
+});
+
+function loadSoundSetting() {
+  const saved = localStorage.getItem("sound");
+
+  if (saved !== null) {
+    soundEnabled = JSON.parse(saved);
+  }
+
+  if (soundEnabled) {
+    toggleBtn.innerText = "🔊 Sound ON";
+    playMusic();
+  } else {
+    toggleBtn.innerText = "🔇 Sound OFF";
+  }
+}
+
+loadSoundSetting();
+
 function showScreen(id){
 
   const screens = document.querySelectorAll(".screen");
@@ -41,39 +93,77 @@ function showScreen(id){
 }
 
 startBtn.addEventListener("click",()=>{
+  clickSound.currentTime = 0;
+  clickSound.play();
   startGame();
   showScreen("game-screen");
 });
 
 exitBtn.addEventListener("click",()=>{
+  clickSound.currentTime = 0;
+  clickSound.play();
   confirmModal.style.display = "flex";
 });
 
 confirmYes.addEventListener("click",()=>{
   confirmModal.style.display = "none";
+  clickSound.currentTime = 0;
+  clickSound.play();
   showScreen("start-screen");
 });
 
 confirmNo.addEventListener("click",()=>{
   confirmModal.style.display = "none";
+  clickSound.currentTime = 0;
+  clickSound.play();
 });
 
 playAgainBtn.addEventListener("click",()=>{
+  clickSound.currentTime = 0;
+  clickSound.play();
   startGame();
   showScreen("game-screen");
 });
 
 backBtn.addEventListener("click",()=>{
+  clickSound.currentTime = 0;
+  clickSound.play();
   showScreen("start-screen");
 });
 
+function playSound(sound) {
+  if (!soundEnabled) return;
+
+  sound.currentTime = 0;
+  sound.play().catch(() => {});
+}
+
+function playMusic() {
+  if (soundEnabled) {
+    bgMusic.play().catch(() => {});
+  }
+}
+
+function stopMusic() {
+  bgMusic.pause();
+}
+
+function vibrate(ms = 100) {
+  if (navigator.vibrate) {
+    navigator.vibrate(ms);
+  }
+}
+
 function startGame(){
+
+  moves = 0;
 
   firstCard=null;
   secondCard=null;
   lockBoard=false;
   matchedCount=0;
 
+  moveCounter.innerText = moves;
   const pairs = parseInt(difficulty.value) || 4;
 
   // mapping difficulty
@@ -153,6 +243,8 @@ function renderCards(){
 
 function handleCardClick(){
 
+  flipSound.currentTime = 0;
+  flipSound.play();
   if(lockBoard) return;
 
   if(this.classList.contains("matched")) return;
@@ -167,7 +259,8 @@ function handleCardClick(){
     return;
 
   }
-
+moves++;
+moveCounter.innerText = moves;
   secondCard=this;
 
   checkMatch();
@@ -176,6 +269,10 @@ function handleCardClick(){
 function checkMatch(){
 
   if(firstCard.dataset.card===secondCard.dataset.card){
+
+    matchSound.currentTime = 0;
+    matchSound.play();
+    vibrate(100);
 
     firstCard.classList.add("matched");
     secondCard.classList.add("matched");
@@ -218,8 +315,15 @@ function checkWin(){
 
   if(matchedCount===cards.length){
 
+    winSound.currentTime = 0;
+    winSound.play();
+    vibrate(100);
+
     saveWin();
 
+    document.querySelector("#win-screen h2").innerText =
+  `Kamu Menang dalam ${moves} langkah! 🎉`;
+  
     setTimeout(()=>{
       showScreen("win-screen");
       loadWin();
