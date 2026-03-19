@@ -21,7 +21,8 @@ body {
   box-shadow: 0 20px 25px rgba(0,0,0,0.15); /* modern shadow */
 }
 #game-screen,
-#win-screen{
+#win-screen,
+#defeat-screen{
     display: none;
 }
 #board {

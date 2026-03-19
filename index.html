@@ -24,11 +24,11 @@
   <button id="startBtn">Bermain</button>
 </div>
 
-
 <!-- GAME SCREEN -->
-<div id="game-screen" class="screen" >
+<div id="game-screen" class="screen">
   <h2>Guess the Card !<span style="font-size: 21px;">😊</span></h2>
-  <p>Moves: <b><span id="moveCounter">0</span></b></p>
+  <p>Langkahmu: <b><span id="moveCounter">0</span></b></p>
+  <p>Langkah Tersisa: <b><span id="movesLeft">0</span></b></p>
   <div id="board"></div>
   <button id="exitBtn">Keluar</button>
 </div>
@@ -40,6 +40,14 @@
   <img src="img/maxwell-maxwellthecat.gif" alt="Kucing lucu bermain" width="300" height="250">
   <button id="playAgainBtn">Main Lagi</button>
   <button id="backBtn">Kembali ke Beranda</button>
+</div>
+
+<div id="defeat-screen" class="screen">
+  <h2>Kamu Kalah 😢</h2>
+  <p>Moves kamu habis!</p>
+  <img src="img/lose.jpg" alt="booo" width="300" height="250">
+  <button id="retryBtn">Coba Lagi</button>
+  <button id="backMenuBtn">Kembali ke Menu</button>
 </div>
 
 <div id="confirm-exit" class="modal">

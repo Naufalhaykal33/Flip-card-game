@@ -9,15 +9,22 @@ const difficulty = document.getElementById("difficulty");
 
 let moves = 0;
 const moveCounter = document.getElementById("moveCounter");
+const movesLeftText = document.getElementById("movesLeft");
+
+let maxMoves = 0;
+const retryBtn = document.getElementById("retryBtn");
+const backMenuBtn = document.getElementById("backMenuBtn");
 
 const clickSound = new Audio("sound/klik.wav");
 const flipSound = new Audio("sound/flip.wav");
 const matchSound = new Audio("sound/match.wav");
 const winSound = new Audio("sound/win.wav");
+const loseSound = new Audio("sound/lose.wav");
 clickSound.volume = 0.5;
 flipSound.volume = 0.6;
 matchSound.volume = 0.4;
 winSound.volume = 1;
+loseSound.volume = 1;
 const bgMusic = new Audio("sound/background.wav");
 bgMusic.loop = true;
 bgMusic.volume = 0.3;
@@ -131,6 +138,17 @@ backBtn.addEventListener("click",()=>{
   showScreen("start-screen");
 });
 
+retryBtn.addEventListener("click", () => {
+  playSound(clickSound);
+  startGame();
+  showScreen("game-screen");
+});
+
+backMenuBtn.addEventListener("click", () => {
+  playSound(clickSound);
+  showScreen("start-screen");
+});
+
 function playSound(sound) {
   if (!soundEnabled) return;
 
@@ -166,10 +184,21 @@ function startGame(){
   moveCounter.innerText = moves;
   const pairs = parseInt(difficulty.value) || 4;
 
-  // mapping difficulty
-  if(pairs === 4) currentDifficulty = "easy";
-  if(pairs === 6) currentDifficulty = "medium";
-  if(pairs === 8) currentDifficulty = "hard";
+  // 🎯 set difficulty + max moves
+  if(pairs === 4){
+    currentDifficulty = "easy";
+    maxMoves = 10;
+  }
+
+  if(pairs === 6){
+    currentDifficulty = "medium";
+    maxMoves = 18;
+  }
+
+  if(pairs === 8){
+    currentDifficulty = "hard";
+    maxMoves = 26;
+  }
 
   generateCards(pairs);
   updateGrid();
@@ -262,6 +291,9 @@ function handleCardClick(){
 moves++;
 moveCounter.innerText = moves;
   secondCard=this;
+  let sisa = maxMoves - moves;
+movesLeftText.innerText = sisa;
+checkLose(); // 🔥 pindahkan ke sini (langsung cek setiap move)
 
   checkMatch();
 }
@@ -303,6 +335,7 @@ function checkMatch(){
     },800);
 
   }
+  
 }
 
 function resetTurn(){
@@ -329,6 +362,22 @@ function checkWin(){
       loadWin();
     },500);
     launchConfetti();
+  }
+
+}
+
+function checkLose(){
+
+  if(moves >= maxMoves && matchedCount !== cards.length){
+
+    setTimeout(() => {
+
+      showScreen("defeat-screen");
+
+      loseSound.play(); // 🔥 sound kalah
+
+    }, 500);
+
   }
 
 }
